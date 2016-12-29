@@ -1,5 +1,4 @@
 const Yeoman = require("yeoman-generator")
-const yosay = require("yosay")
 const slug = require("slug")
 const camel = require("camelcase")
 const normalize = require("normalize-url")
@@ -80,7 +79,12 @@ module.exports = Yeoman.Base.extend({
   },
   writing: function () {
     [
-      { name: 'travis', options: { config: { after_script: ['npm run coveralls'] }}},
+      { name: 'travis', options: { config: {
+        sudo:'false',
+        language: 'node_js',
+        node_js: ['7', '6', '5', '4', '4.4.4'],
+        after_script: ['npm run coveralls']
+      }}},
       { name: 'babel',  options: { 'skip-install': this.options['skip-install'] }},
       { name: 'git-init' },
     ].forEach(function(generator) {
