@@ -1,0 +1,60 @@
+{
+  "name": "<%= moduleName %>",
+  "version": "1.0.0",
+  "description": "<%= moduleDesc %>",
+  "main": "dist/index.js",
+  "files": [
+    "bin/",
+    "dist/"
+  ],
+  "scripts": {
+    "clean": "rimraf dist",
+    "lint": "eslint src test",
+    "check": "npm run lint -s && dependency-check package.json --entry src",
+    "watch": "watch 'npm run build' src test",
+    "test": "babel-node test/index.js | tspec",
+    "prebuild": "npm run check -s && npm run clean -s",
+    "build": "babel --optional runtime src -d dist",
+    "postbuild": "npm run test -s",
+    "coverage": "nyc --reporter=lcov --reporter=text npm run test",
+    "coveralls": "npm run coverage -s && coveralls < coverage/lcov.info",
+    "postcoveralls": "rimraf ./coverage",
+    "prepublish": "npm run build -s",
+    "deploy": "git pull --rebase origin master && git push origin master",
+    "patch": "npm version patch && npm publish",
+    "minor": "npm version minor && npm publish",
+    "major": "npm version major && npm publish",
+    "postpublish": "git push origin master --follow-tags",
+    "toc": "doctoc --github --title \"# Changelog\" CHANGELOG.md"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/<%= githubUsername %>/<%= moduleName %>.git"
+  },
+  "keywords": [
+    <% moduleKeywords.forEach(function(keyword, i, arr) { %>"<%= keyword %>"<% if (i !== arr.length - 1) { %>,
+    <% } %><% }); %>
+  ],
+  "author": "<%= name %> <<%= email %>>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/<%= githubUsername %>/<%= moduleName %>/issues"
+  },
+  "homepage": "https://github.com/<%= githubUsername %>/<%= moduleName %>#readme",
+  "devDependencies": {
+    "eslint": "^3.8.1",
+    "babel-eslint": "^7.1.1",
+    "coveralls": "^2.11.4",
+    "nyc": "^8.1.0",
+    "tape": "^4.2.2",
+    "tap-spec": "^4.1.1",
+    "rimraf": "^2.4.2",
+    "dependency-check": "^2.5.1",
+    "watch": "^0.16.0",
+    "doctoc": "^0.15.0",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-react": "^6.8.0"
+  }
+}
