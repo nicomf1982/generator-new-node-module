@@ -45,7 +45,7 @@ $ yo new-node-module
 > You need [Yeoman](http://yeoman.io/) to run this command.
 
 ```
-yo rise
+yo new-node-module
 → create package.json
 → create README.md
 → create LICENSE
